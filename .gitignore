@@ -1,0 +1,5 @@
+*~
+*.pem
+.vagrant
+aws.yml
+*password.pp
