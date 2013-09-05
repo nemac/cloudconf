@@ -73,17 +73,17 @@ class nappl-server {
     mode    => 0600
   }
 
-  group { "sudoers" :
-    ensure => present,
-    system => true
-  }
-  file { "/etc/sudoers.d/sudoers_group":
-    ensure => present,
-    content => "%sudoers        ALL=(ALL)       NOPASSWD: ALL",
-    owner => root,
-    group => root,
-    mode => 0440
-  }
+#  group { "sudoers" :
+#    ensure => present,
+#    system => true
+#  }
+#  file { "/etc/sudoers.d/sudoers_group":
+#    ensure => present,
+#    content => "%sudoers        ALL=(ALL)       NOPASSWD: ALL",
+#    owner => root,
+#    group => root,
+#    mode => 0440
+#  }
 
   exec { 'vagrant-user-in-git-goup':
     require => Package['drutils'],
