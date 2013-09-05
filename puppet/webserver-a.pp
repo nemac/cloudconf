@@ -57,24 +57,50 @@ class apache-server {
 
 class nappl-server {
 
+  file { "/home/git/.ssh":
+    require => Package['drutils'],
+    ensure  => directory,
+    owner   => "git",
+    group   => "git",
+    mode    => 0700
+  }  
+
+  file { "/home/git/.ssh/authorized_keys":
+    require => File['/home/git/.ssh'],
+    ensure  => present,
+    owner   => "git",
+    group   => "git",
+    mode    => 0600
+  }
+
+  group { "sudoers" :
+    ensure => present,
+    system => true
+  }
+  file { "/etc/sudoers.d/sudoers_group":
+    ensure => present,
+    content => "%sudoers        ALL=(ALL)       NOPASSWD: ALL",
+    owner => root,
+    group => root,
+    mode => 0440
+  }
+
   exec { 'vagrant-user-in-git-goup':
     require => Package['drutils'],
-    command => '/bin/grep -q vagrant /etc/passwd && /usr/sbin/usermod -a -G git vagrant',
-    unless  => '/bin/grep -q vagrant /etc/passwd && ( /usr/bin/groups vagrant | /bin/grep -q git )'
+    command => '/etc/puppet/files/assets/util/add_user_to_group vagrant git' 
   }
   exec { 'vagrant-user-in-nappl-goup':
     require => Package['drutils'],
-    command => '/bin/grep -q vagrant /etc/passwd && /usr/sbin/usermod -a -G nappl vagrant',
-    unless  => '/bin/grep -q vagrant /etc/passwd && ( /usr/bin/groups vagrant | /bin/grep -q nappl )'
+    command => '/etc/puppet/files/assets/util/add_user_to_group vagrant nappl' 
   }
-  exec { 'etc-hosts-writable-by-nappl-group':
-    require => Package['drutils'],
-    command => '/bin/grep -q nappl /etc/group && (/bin/chgrp nappl /etc/hosts ; /bin/chmod g+w /etc/hosts)'
+  file { '/etc/hosts':
+    ensure => present,
+    group => nappl,
+    mode => 0664
   }
   exec { 'vagrant-user-has-mysql-root-access':
     require => Class["mysql::server"],
-    command => '/bin/grep -q vagrant /etc/passwd && ( /bin/cp /root/.my.cnf /home/vagrant ; /bin/chown vagrant.vagrant /home/vagrant/.my.cnf )',
-    unless => '/bin/grep -q vagrant /etc/passwd && /usr/bin/test -f /home/vagrant/.my.cnf'
+    command => '/etc/puppet/files/assets/util/give_user_mysql_root_access vagrant'
   }
 
 }

@@ -39,12 +39,6 @@ User Management
 
 In puppet:
 
-    mkdir /home/git/.ssh
-    chown git.git /home/git/.ssh
-    chmod g=,u= /home/git/.ssh
-    touch /home/git/.ssh/authorized_keys
-    chmod g=,u= /home/git/.ssh/authorized_keys
-
     create sudoers group
     create file /etc/sudoers.d/sudoers_group with content
         %sudoers        ALL=(ALL)       NOPASSWD: ALL
