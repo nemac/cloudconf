@@ -34,9 +34,10 @@ if bash_command("/usr/bin/getent group %s" % GROUP) == "":
     sys.exit(0)
 
 # if USER is already in GROUP, exit
-if bash_command("/usr/bin/getent group %s | grep %s" % (GROUP,USER)) == "":
+if bash_command("/usr/bin/getent group %s | grep %s" % (GROUP,USER)) != "":
     sys.exit(0)
 
-os.system("/usr/sbin/usermod -a -G %s %s" % (USER,GROUP))
+cmd  = "/usr/sbin/usermod -a -G %s %s" % (GROUP,USER)
+os.system(cmd)
 
 sys.exit(0)
