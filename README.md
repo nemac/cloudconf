@@ -38,6 +38,7 @@ User Management
 ===============
 
 In puppet:
+
     mkdir /home/git/.ssh
     chown git.git /home/git/.ssh
     chmod g=,u= /home/git/.ssh
