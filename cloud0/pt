@@ -1,0 +1,4 @@
+#! /bin/bash
+
+# puppet-test
+puppet apply --noop --modulepath=/etc/puppet/files/modules:/etc/puppet/modules --fileserverconfig=/etc/puppet/files/fileserver.conf /etc/puppet/files/webserver-a.pp

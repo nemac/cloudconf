@@ -1,0 +1,6 @@
+#! /bin/bash
+
+# puppet-apply
+
+puppet apply --verbose --debug --modulepath=/etc/puppet/files/modules:/etc/puppet/modules --fileserverconfig=/etc/puppet/files/fileserver.conf /etc/puppet/files/webserver-a.pp
+

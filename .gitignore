@@ -2,4 +2,5 @@
 *.pem
 .vagrant
 aws.yml
+settings.pp
 *password.pp

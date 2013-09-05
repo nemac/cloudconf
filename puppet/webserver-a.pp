@@ -1,4 +1,4 @@
-import '/vagrant/mysql-root-password.pp'
+import '/vagrant/settings.pp'
 
 exec { disable_selinux_sysconfig:
     command => '/bin/sed -i "s@^\(SELINUX=\).*@\1disabled@" /etc/selinux/config',
@@ -6,13 +6,13 @@ exec { disable_selinux_sysconfig:
 }
 
 exec { 'set-hostname':
-    command => '/bin/sed -i "s/HOSTNAME=.*/HOSTNAME=cloud1/" /etc/sysconfig/network',
-    unless  => '/bin/grep -q "HOSTNAME=cloud1" /etc/sysconfig/network',
+    command => "/bin/sed -i 's/HOSTNAME=.*/HOSTNAME=${server_name}/' /etc/sysconfig/network",
+    unless  => "/bin/grep -q 'HOSTNAME=${server_name}' /etc/sysconfig/network",
 }
 
 exec { 'etc-hosts':
-    command => '/bin/echo "127.0.0.1 cloud1" > /etc/hosts',
-    unless  => '/bin/grep -q "127.0.0.1 cloud1" /etc/hosts',
+    command => "/bin/echo '127.0.0.1 ${server_name}' >> /etc/hosts",
+    unless  => "/bin/grep -q '127.0.0.1 ${server_name}' /etc/hosts",
 }
 
 package { 'emacs-nox':

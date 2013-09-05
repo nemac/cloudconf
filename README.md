@@ -33,3 +33,40 @@ be gibberish -- but they must be present.
   ```
     $mysql_root_password = "<mysql root password here>"
   ```
+
+User Management
+===============
+
+In puppet:
+    mkdir /home/git/.ssh
+    chown git.git /home/git/.ssh
+    chmod g=,u= /home/git/.ssh
+    touch /home/git/.ssh/authorized_keys
+    chmod g=,u= /home/git/.ssh/authorized_keys
+
+    create sudoers group
+    create file /etc/sudoers.d/sudoers_group with content
+        %sudoers        ALL=(ALL)       NOPASSWD: ALL
+
+To create user user mbp:
+
+    /usr/sbin/useradd -m -U mbp
+    mkdir /home/mbp/.ssh
+    chown mbp.mbp /home/mbp/.ssh
+    chmod g=,u= /home/mbp/.ssh
+    touch /home/mbp/.ssh/authorized_keys
+    chmod g=,u= /home/mbp/.ssh/authorized_keys
+    <append mbp's id_rsa.pub to /home/mbp/.ssh/authorized_keys>
+
+To give mbp sudoer's priv:
+
+    /usr/bin/usermod -a -G sudoers mbp
+
+To give mbp 'git deploy' privs:
+
+    /usr/bin/usermod -a -G git mbp
+
+To give mbp 'nappl' privs (ability to create/delete nappl containers):
+
+    /usr/bin/usermod -a -G nappl mbp
+    cp /root/.my.cnf /home/mbp ; chown mbp.mbp /home/mbp/.my.cnf
