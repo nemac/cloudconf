@@ -37,31 +37,35 @@ be gibberish -- but they must be present.
 User Management
 ===============
 
-In puppet:
-
-    create sudoers group
-    create file /etc/sudoers.d/sudoers_group with content
-        %sudoers        ALL=(ALL)       NOPASSWD: ALL
-
 To create user user mbp:
 
-    /usr/sbin/useradd -m -U mbp
-    mkdir /home/mbp/.ssh
-    chown mbp.mbp /home/mbp/.ssh
-    chmod g=,u= /home/mbp/.ssh
-    touch /home/mbp/.ssh/authorized_keys
-    chmod g=,u= /home/mbp/.ssh/authorized_keys
-    <append mbp's id_rsa.pub to /home/mbp/.ssh/authorized_keys>
+    /etc/puppet/files/assets/util/create_user USER KEYFILE
+
+        /usr/sbin/useradd -m -U mbp
+        mkdir /home/mbp/.ssh
+        chown mbp.mbp /home/mbp/.ssh
+        chmod g=,u= /home/mbp/.ssh
+        touch /home/mbp/.ssh/authorized_keys
+        chmod g=,u= /home/mbp/.ssh/authorized_keys
+        <append mbp's id_rsa.pub to /home/mbp/.ssh/authorized_keys>
+    
 
 To give mbp sudoer's priv:
 
-    /usr/bin/usermod -a -G sudoers mbp
+    /etc/puppet/files/assets/util/give_user_sudoer_priv USER
+
+        /usr/bin/usermod -a -G admin mbp
 
 To give mbp 'git deploy' privs:
 
-    /usr/bin/usermod -a -G git mbp
+    /etc/puppet/files/assets/util/give_user_git_priv USER KEYFILE
+
+        /usr/bin/usermod -a -G git mbp
+        <append mbp's id_rsa.pub to /home/git/.ssh/authorized_keys>
 
 To give mbp 'nappl' privs (ability to create/delete nappl containers):
 
-    /usr/bin/usermod -a -G nappl mbp
-    cp /root/.my.cnf /home/mbp ; chown mbp.mbp /home/mbp/.my.cnf
+    /etc/puppet/files/assets/util/give_user_nappl_priv USER
+
+        /usr/bin/usermod -a -G nappl mbp
+        cp /root/.my.cnf /home/mbp ; chown mbp.mbp /home/mbp/.my.cnf
