@@ -28,5 +28,5 @@ if os.path.exists("/home/%s/.my.cnf" % USER) and (bash_command("/usr/bin/getent 
     print "user %s already appears to have nappl privs" % USER
     sys.exit(-1)
 
-os.system("/usr/bin/usermod -a -G nappl %s" % USER)
+os.system("/usr/sbin/usermod -a -G nappl %s" % USER)
 os.system("/bin/cp /root/.my.cnf /home/%s ; chown %s.%s /home/%s/.my.cnf" % (USER,USER,USER,USER))

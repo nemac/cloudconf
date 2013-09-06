@@ -30,5 +30,5 @@ if not os.path.exists(KEYFILE):
     print "key file %s not found" % KEYFILE
     sys.exit(-1)
 
-os.system("/usr/bin/usermod -a -G git %s" % USER)
+os.system("/usr/sbin/usermod -a -G git %s" % USER)
 os.system("cat %s >> /home/git/.ssh/authorized_keys" % KEYFILE)

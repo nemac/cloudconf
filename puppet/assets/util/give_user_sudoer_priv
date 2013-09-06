@@ -24,4 +24,4 @@ if bash_command("/usr/bin/getent passwd %s" % USER) == "":
     print "user %s does not exist" % USER
     sys.exit(-1)
 
-os.system("/usr/bin/usermod -a -G admin %s" % USER)
+os.system("/usr/sbin/usermod -a -G admin %s" % USER)
