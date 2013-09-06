@@ -73,6 +73,16 @@ class nappl-server {
     mode    => 0600
   }
 
+  group { "admin" :
+    ensure => present,
+    system => true
+  }
+  exec { "admin-group-can-sudo":
+    require => Group['admin'],
+    command => '/bin/chmod u+w /etc/sudoers ; echo "%admin ALL=NOPASSWD: ALL" >> /etc/sudoers ; /bin/chmod u-w /etc/sudoers',
+    unless  => '/bin/grep -q "%admin ALL=NOPASSWD: ALL" /etc/sudoers'
+  }
+
 #  group { "sudoers" :
 #    ensure => present,
 #    system => true
