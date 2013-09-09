@@ -3,4 +3,5 @@
 .vagrant
 aws.yml
 settings.pp
+settings.yml
 *password.pp
