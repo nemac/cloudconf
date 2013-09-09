@@ -5,3 +5,4 @@ aws.yml
 settings.pp
 settings.yml
 *password.pp
+cloud-users
