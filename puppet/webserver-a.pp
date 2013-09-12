@@ -17,7 +17,9 @@ exec { 'etc-hosts':
 
 file { "/etc/ssh/ssh_config" :
   ensure => present,
-  source => "/etc/puppet/files/assets/ssh/ssh_config"
+  source => "/etc/puppet/files/assets/ssh/ssh_config",
+  owner   => "root",
+  group   => "root"
 }
 
 package { 'emacs-nox':
@@ -25,6 +27,10 @@ package { 'emacs-nox':
 }
 
 package { 'man':
+  ensure => installed
+}
+
+package { 'make':
   ensure => installed
 }
 
