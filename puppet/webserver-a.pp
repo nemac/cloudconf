@@ -15,6 +15,11 @@ exec { 'etc-hosts':
     unless  => "/bin/grep -q '127.0.0.1 ${server_name}' /etc/hosts",
 }
 
+file { "/etc/ssh/ssh_config" :
+  ensure => present,
+  source => "/etc/puppet/files/assets/ssh/ssh_config"
+}
+
 package { 'emacs-nox':
   ensure => installed
 }
