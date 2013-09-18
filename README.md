@@ -25,7 +25,10 @@ Note that the above two files are required even if you are just running servers
 locally with Virtualbox; the files are not used in that case -- the values in them may
 be gibberish -- but they must be present.
   
-  
+* * In the cloud0 and cloud1 directory there are two files that you to rename.  
+Rename settings-example.pp and settings-example.yml to settings.pp and settings.yml respectively.  
+Also, in the setting.pp file change the mysql_root_password to something (anything) without spaces.  
+Note: you don’t need to remember this password.  
   
 * *puppet/assets/mysql/password.pp*: Mysql root password file.  This file should
   have the password that will be set for the Mysql 'root' account on the server;
