@@ -1,0 +1,6 @@
+aws:
+  instance_type     : 't1.micro'
+  access_key_id     : '<amazon ec2 access key id goes here>'
+  secret_access_key : '<amazon ec2 secret access key goes here>'
+  keypair_name      : '<keypair file name (without .pem suffix) goes here>'
+  security_groups   : [ '<ec2 security group name goes here>' ]

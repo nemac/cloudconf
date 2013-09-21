@@ -1,41 +1,26 @@
 In order to run servers in this project, you need to add the following files to this
 directory:
 
-* *aws.yml*: Amazon EC2 credentials file.  The file should have the following form:
-  ```
-      aws:
-        instance_type     : 't1.micro'
-        access_key_id     : '<amazon ec2 access key id goes here>'
-        secret_access_key : '<amazon ec2 secret access key goes here>'
-        keypair_name      : 'keypair1'
-        security_groups   : [ 'webserver' ]
-        ami               : 'ami-fc314395'
-  ```
-  
-* *keypair1.pem*: keypair file for accessing Amazon server (this file should be named
-  according to whatever the value of keypair_name is in aws.yml).   The file should
-  have the following form:
-  ```
-      -----BEGIN RSA PRIVATE KEY-----
-      ...
-      -----END RSA PRIVATE KEY-----
-  ```
+* *aws.yml*: create this file by making a copy of the file
+aws-example.yml named aws.yml.  If you are only planning to use this
+project to create VirtualBox servers, you do not need to edit the
+values in aws.yml --- the actual values don't matter, but the file
+must be present.
 
-Note that the above two files are required even if you are just running servers
-locally with Virtualbox; the files are not used in that case -- the values in them may
-be gibberish -- but they must be present.
-  
-In the cloud0 and cloud1 directory there are two files that need to be renamed:  
-Rename settings-example.pp and settings-example.yml to settings.pp and settings.yml respectively.  
-Also, in the settings.pp file change the mysql_root_password to something (anything) without spaces.  
-Note: you don’t need to remember this password.  
-  
-* *puppet/assets/mysql/password.pp*: Mysql root password file.  This file should
-  have the password that will be set for the Mysql 'root' account on the server;
-  it should be of the following form:
-  ```
-    $mysql_root_password = "<mysql root password here>"
-  ```
+Also, in the cloud0 directory, create the following two files
+
+* *settings.pp*: create this file by making a copy of the file
+settings-example.pp named settings.pp.  Then edit your settings.pp to
+change the mysql_root_password to something (anything) without spaces.
+You don’t need to remember this password -- just make up something.
+
+* *settings.yml*: create this file by making a copy of the file
+settings-example.yml named settings.yml.  You don't need to edit this
+file at all --- just create the copy.
+
+(Important note: in all three of the above, do not simply rename the
+original '*-example.*' files -- leave these files unchanged, and make
+a copy of each one without the '-example' in the name.)
 
 User Management
 ===============
