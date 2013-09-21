@@ -148,6 +148,12 @@ package { 'php':
   ensure => installed,
 }
 
+exec { 'set-php-memory-limit' :
+  require => Package["php"],
+  command => "/bin/sed -i 's/^memory_limit = .*$/memory_limit = 512M/' /etc/php.ini",
+  unless  => "/bin/grep -q 'memory_limit = 512M' /etc/php.ini"
+}
+
 package { 'php-gd':
   ensure => installed,
 }
