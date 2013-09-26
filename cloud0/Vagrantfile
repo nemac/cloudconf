@@ -60,6 +60,17 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.network :forwarded_port, guest: 80, host: settings["web_port"], auto_correct: true
 
+  if settings["additional_port_mappings"]
+    settings["additional_port_mappings"].each do |mapping|
+      config.vm.network :forwarded_port, guest: mapping["guest_port"], host: mapping["host_port"]
+    end
+  end
+
+  if settings["private_network_ip"]
+    config.vm.network :private_network, ip: settings["private_network_ip"]
+  end
+
   # use a private IP address for virtualbox VMs
   #config.vm.network :private_network, ip: "192.168.33.20"
+
 end
