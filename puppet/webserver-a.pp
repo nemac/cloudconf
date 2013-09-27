@@ -26,6 +26,10 @@ package { 'emacs-nox':
   ensure => installed
 }
 
+package { 'unzip':
+  ensure => installed
+}
+
 package { 'man':
   ensure => installed
 }
