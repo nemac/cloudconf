@@ -110,6 +110,12 @@ class nappl-server {
 #    mode => 0440
 #  }
 
+  file { "/var/log/httpd":
+    require => Package['drutils'],
+    ensure  => directory,
+    group   => "nappl",
+    mode    => 0750
+  }  
   exec { 'vagrant-user-in-git-goup':
     require => Package['drutils'],
     command => '/etc/puppet/files/assets/util/add_user_to_group vagrant git' 
