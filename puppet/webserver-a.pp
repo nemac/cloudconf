@@ -168,6 +168,10 @@ package { 'php-gd':
   ensure => installed,
 }
 
+package { 'php-mbstring':
+  ensure => installed,
+}
+
 package { 'php-domxml-php4-php5' :
   ensure => installed,
 }
