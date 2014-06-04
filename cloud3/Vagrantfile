@@ -1,0 +1,65 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
+VAGRANTFILE_API_VERSION = "2"
+
+require 'yaml'
+
+# Load local settings from settings.yml file
+if File.exist?("settings.yml")
+  settings = YAML.load_file('settings.yml')["vagrant"]
+end
+
+# Load sensitive AWS credentials from external file ../aws.yml
+if File.exist?("../aws.yml")
+  aws_config = YAML.load_file('../aws.yml')["aws"]
+  pemfile = "../" + aws_config["keypair_name"] + ".pem"
+end
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+  config.vm.box     = "centos-6.4-base"
+  config.vm.box_url = "http://dev.nemac.org/boxes/CentOS-6.4-base.box"
+
+  config.vm.provider "aws" do |aws, override|
+    override.vm.box              = "dummy"
+    override.vm.box_url          = "http://dev.nemac.org/boxes/dummy.box"
+
+    aws.instance_type             = aws_config["instance_type"]
+    #aws.instance_name             = aws_config["instance_name"]
+    aws.access_key_id             = aws_config["access_key_id"]
+    aws.secret_access_key         = aws_config["secret_access_key"]
+    aws.keypair_name              = aws_config["keypair_name"]
+    aws.security_groups           = aws_config["security_groups"]
+    aws.tags                      = { 'name' => settings["server_name"] }
+
+    aws.ami                       = "ami-4690ea2f"
+    # This is a custom AMI which I created by doing the following:
+    #   1. subscribe to the AWS MarketPlace "CentOS with updates" image (in the MarketPlace, but free)
+    #   2. fire up an instance using the AMI subscribed in step 1, then ssh to it
+    #   3. remove the "requiretty" line from /etc/sshd/config (or some such)
+    #   4. disable SELinux
+    #   5. rm /root/.ssh/authorized_keys
+    #   6. back at the AWS console, select the instance and choose "Create Image" to create the AMId
+
+    override.ssh.username         = "root"
+    override.ssh.private_key_path = pemfile
+  end
+
+  config.vm.synced_folder "../puppet", "/etc/puppet/files"
+
+  config.vm.provision :shell, :path => "../shell/bootstrap.sh"
+
+  config.vm.provision :puppet do |puppet|
+    puppet.options        = "--debug"
+    puppet.module_path    = "../puppet/modules"
+    puppet.manifests_path = "../puppet"
+    puppet.manifest_file  = "sshserver-a.pp"
+  end
+
+  config.vm.network :forwarded_port, guest: 80, host: settings["web_port"], auto_correct: true
+
+  # use a private IP address for virtualbox VMs
+  #config.vm.network :private_network, ip: "192.168.33.20"
+end
