@@ -41,3 +41,14 @@ package { 'wget':
 package { 'git':
   ensure => installed
 }
+
+group { "admin" :
+  ensure => present,
+  system => true
+}
+
+exec { "admin-group-can-sudo":
+  require => Group['admin'],
+  command => '/bin/chmod u+w /etc/sudoers ; echo "%admin ALL=NOPASSWD: ALL" >> /etc/sudoers ; /bin/chmod u-w /etc/sudoers',
+  unless  => '/bin/grep -q "%admin ALL=NOPASSWD: ALL" /etc/sudoers'
+}
