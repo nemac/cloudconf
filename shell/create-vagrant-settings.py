@@ -29,10 +29,7 @@ if not os.path.exists("/vagrant"):
     os.system("mkdir /vagrant")
     os.system("chmod o=,g= /vagrant")
 
-if not os.path.exists("/vagrant/settings.pp"):
-    with open("/vagrant/settings.pp", "w") as f:
-        f.write("$server_name = \"%s\"\n" % name)
-        f.write("$mysql_root_password = \"%s\"\n" % random_password(16))
-    os.system("chmod o=,g= /vagrant/settings.pp")
-
-
+with open("/vagrant/settings.pp", "w") as f:
+    f.write("$server_name = \"%s\"\n" % name)
+    f.write("$mysql_root_password = \"%s\"\n" % random_password(16))
+os.system("chmod o=,g= /vagrant/settings.pp")
