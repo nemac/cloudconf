@@ -12,7 +12,7 @@ package { 'netcdf-devel':
   ensure => installed
 }
 
-package { 'netcdf4-python'
+package { 'netcdf4-python':
   ensure => installed
 }
 
@@ -33,5 +33,17 @@ package { 'nemac-gdal-devel':
 }
 
 package { 'nemac-gdal-python':
+  ensure => installed
+}
+
+package { 'php-cli':
+  ensure => installed
+}
+
+package { 'php-devel':
+  ensure => installed
+}
+
+package { 'php-soap':
   ensure => installed
 }
