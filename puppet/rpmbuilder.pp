@@ -30,3 +30,7 @@ package { 'fedora-packager' :
 package { 'createrepo' :
   ensure => installed
 }
+
+package { 'tito' :
+  ensure => installed
+}
