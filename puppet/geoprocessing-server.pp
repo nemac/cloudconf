@@ -47,3 +47,7 @@ package { 'php-devel':
 package { 'php-soap':
   ensure => installed
 }
+
+package { 'php-xml':
+  ensure => installed
+}
