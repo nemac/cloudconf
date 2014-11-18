@@ -51,3 +51,7 @@ package { 'php-soap':
 package { 'php-xml':
   ensure => installed
 }
+
+package { 'freetype':
+  ensure => installed
+}
