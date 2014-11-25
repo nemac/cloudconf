@@ -55,3 +55,31 @@ package { 'php-xml':
 package { 'freetype':
   ensure => installed
 }
+
+package { 'zlib':
+  ensure => installed
+}
+
+package { 'libpng':
+  ensure => installed
+}
+
+package { 'libjpeg-turbo':
+  ensure => installed
+}
+
+package { 'geos':
+  ensure => installed
+}
+
+package { 'postgresql':
+  ensure => installed
+}
+
+package { 'postgresql-libs':
+  ensure => installed
+}
+
+package { 'libxml2':
+  ensure => installed
+}
