@@ -7,7 +7,8 @@ fi
 yum -y update
 
 if test ! -f /usr/bin/puppet ; then
-  rpm -Uvh http://yum.puppetlabs.com/el/6/products/i386/puppetlabs-release-6-7.noarch.rpm
+  #rpm -Uvh http://yum.puppetlabs.com/el/6/products/i386/puppetlabs-release-6-7.noarch.rpm
+  rpm -Uvh http://yum.puppetlabs.com/puppetlabs-release-el-7.noarch.rpm
   yum -y install puppet
 fi
 
