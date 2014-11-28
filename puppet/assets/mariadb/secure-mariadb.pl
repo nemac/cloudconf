@@ -71,6 +71,8 @@ $mycnf = "/root/.my.cnf";
 # get the current password, if any
 $password = get_password_from_ini_file($mycnf);
 
+print $password, "\n";
+
 # connect to the db, using above password, if any
 print "secure-mariadb.pl: Connecting to database...\n";
 if ($password) {
@@ -79,11 +81,14 @@ if ($password) {
     $dbh = DBI->connect("DBI:mysql:mysql", "root");
 }
 
-# delete all users except root@localhost
-print "secure-mariadb.pl: dropping unnecessary users...\n";
+# delete all users with empty username, and all 'root' users except root@localhost:
+print "secure-mariadb.pl: dropping extra users...\n";
 my $sth = doquery("select user,host from user");
 while (defined($hr=$sth->fetchrow_hashref())) {
-    if (($hr->{user} ne "root") || ($hr->{host} ne "localhost")) {
+    if (($hr->{user} eq '')
+	||
+	(($hr->{user} eq 'root') && ($hr->{host} ne 'localhost'))) {
+	printf("secure-mariadb.pl: dropping user '%s'\@'%s'\n", $hr->{user}, $hr->{host});
 	doquery( sprintf("DROP USER '%s'\@'%s' ;\n", $hr->{user}, $hr->{host}) );
     }
 }
