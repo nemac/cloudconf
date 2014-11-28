@@ -10,8 +10,11 @@ class basic-server {
   }
 
   exec { 'set-hostname':
-      command => "/bin/sed -i 's/HOSTNAME=.*/HOSTNAME=${server_name}/' /etc/sysconfig/network",
-      unless  => "/bin/grep -q 'HOSTNAME=${server_name}' /etc/sysconfig/network",
+      # this is for CentOS 7:
+      command => "/usr/bin/hostnamectl set-hostname ${server_name}"
+      # this was for CentOS 6:
+      #   command => "/bin/sed -i 's/HOSTNAME=.*/HOSTNAME=${server_name}/' /etc/sysconfig/network",
+      #   unless  => "/bin/grep -q 'HOSTNAME=${server_name}' /etc/sysconfig/network",
   }
 
   exec { 'etc-hosts':
@@ -45,7 +48,8 @@ class basic-server {
     ensure => installed
   }
 
-  package { 'man':
+  #package { 'man': # package name changed from 'man' to 'man-pages' with CentOS 7
+  package { 'man-pages':
     ensure => installed
   }
 

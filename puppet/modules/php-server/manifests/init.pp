@@ -17,10 +17,12 @@ class php-server {
   package { 'php-mbstring':
     ensure => installed,
   }
-  
-  package { 'php-domxml-php4-php5' :
-    ensure => installed,
-  }
+ 
+# This package does not exist in CentOS 7; not sure what we needed it for, so leaving it
+# out for now.  May need to revisit this. 
+#  package { 'php-domxml-php4-php5' :
+#    ensure => installed,
+#  }
   
   package { 'php-pear':
     ensure => installed

@@ -6,7 +6,8 @@ exec { disable_selinux_sysconfig:
 }
 
 exec { 'set-hostname':
-    command => "/usr/bin/hostnamectl set-hostname ${server_name}"
+    command => "/bin/sed -i 's/HOSTNAME=.*/HOSTNAME=${server_name}/' /etc/sysconfig/network",
+    unless  => "/bin/grep -q 'HOSTNAME=${server_name}' /etc/sysconfig/network",
 }
 
 exec { 'etc-hosts':
@@ -29,7 +30,7 @@ package { 'unzip':
   ensure => installed
 }
 
-package { 'man-pages':
+package { 'man':
   ensure => installed
 }
 
@@ -128,11 +129,26 @@ class nappl-server {
     group => nappl,
     mode => 0664
   }
+  exec { 'vagrant-user-has-mysql-root-access':
+    require => Class["mysql::server"],
+    command => '/etc/puppet/files/assets/util/give_user_mysql_root_access vagrant'
+  }
 
 }
 
 class { "nappl-server" : }
 class { "apache-server" : }
+
+class { 'mysql::server':
+  config_hash => { 'root_password' => $mysql_root_password }
+}
+
+class { 'mysql::php': }
+
+exec { 'secure-mysql-server' :
+    require => Class["mysql::server"],
+    command => '/usr/bin/mysql --defaults-extra-file=/root/.my.cnf --force mysql < /etc/puppet/files/assets/mysql/secure.sql'
+}
 
 package { 'drutils':
   ensure => installed
@@ -156,9 +172,9 @@ package { 'php-mbstring':
   ensure => installed,
 }
 
-#package { 'php-domxml-php4-php5' :
-#  ensure => installed,
-#}
+package { 'php-domxml-php4-php5' :
+  ensure => installed,
+}
 
 package { 'php-pear':
   ensure => installed
@@ -167,59 +183,4 @@ package { 'php-pear':
 exec { 'install-drush' :
     command => '/usr/bin/pear channel-discover pear.drush.org ; /usr/bin/pear install drush/drush ; cd /usr/share/pear/drush/lib ; /bin/mkdir tmp ; cd tmp ; /bin/tar xfz /etc/puppet/files/assets/drush-dependencies/Console_Table-1.1.3.tgz ; /bin/rm -f package.xml ; /bin/mv Console_Table-1.1.3 .. ; cd .. ; /bin/rm -rf tmp',
     unless => '/usr/bin/test -f /usr/bin/drush'
-}
-
-class mariadb-server {
-
-  package { 'mariadb':
-      ensure => installed
-  }
-
-  package { 'mariadb-libs':
-      ensure => installed
-  }
-
-  package { 'mariadb-server':
-    ensure => installed
-  }
-
-  service { 'mariadb':
-    require => Package['mariadb-server'],
-    ensure => running,            # this makes sure it's running now
-    enable => true                # this make sure it starts on each boot
-  }
-
-  package { 'perl-DBD-MySQL':
-      ensure => installed
-  }
-
-  package { 'php-mysql':
-      ensure => installed
-  }
-
-  exec { 'secure-mariadb-server' :
-      require => [Service["mariadb"],Package["perl-DBD-MySQL"]],
-      command => '/usr/bin/perl /etc/puppet/files/assets/mariadb/secure-mariadb.pl'
-  }
-
-  # exec { 'vagrant-user-has-mysql-root-access':
-  #   require => Class["mysql::server"],
-  #   command => '/etc/puppet/files/assets/util/give_user_mysql_root_access vagrant'
-  # }
-
-}
-
-class { "mariadb-server" : }
-
-package { 'rubygem-bundler':
-  ensure => installed
-}
-package { 'ruby-devel':
-  ensure => installed
-}
-package { 'gcc':
-  ensure => installed
-}
-package { 'gcc-c++' :
-  ensure => installed
 }
