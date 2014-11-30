@@ -1,8 +1,6 @@
 class basic-server {
 
-  package { 'drutils':
-    ensure => installed
-  }
+  class { "nappl-server" : }
 
   exec { disable_selinux_sysconfig:
       command => '/bin/sed -i "s@^\(SELINUX=\).*@\1disabled@" /etc/selinux/config',

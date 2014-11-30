@@ -1,5 +1,9 @@
 class nappl-server {
 
+  package { 'drutils':
+    ensure => installed
+  }
+
   # The drutils package creates the 'git' user.  The following
   # ensures that drutils is installed, and creates the 'git'
   # user's ~/.ssh dir:
