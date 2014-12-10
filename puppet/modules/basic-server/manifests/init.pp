@@ -63,4 +63,8 @@ class basic-server {
     ensure => installed
   }
 
+  package { 'screen':
+    ensure => installed
+  }
+
 }

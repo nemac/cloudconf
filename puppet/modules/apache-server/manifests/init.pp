@@ -22,7 +22,7 @@ class apache-server {
 
   # make sure the log dir is accessible to the nappl group
   file { "/var/log/httpd":
-    require => Package['drutils'],
+    require => Package['nappl'],
     ensure  => directory,
     group   => "nappl",
     mode    => 0750

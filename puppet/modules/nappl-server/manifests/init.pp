@@ -1,14 +1,14 @@
 class nappl-server {
 
-  package { 'drutils':
+  package { 'nappl':
     ensure => installed
   }
 
-  # The drutils package creates the 'git' user.  The following
-  # ensures that drutils is installed, and creates the 'git'
+  # The nappl package creates the 'git' user.  The following
+  # ensures that nappl is installed, and creates the 'git'
   # user's ~/.ssh dir:
   file { "/home/git/.ssh":
-    require => Package['drutils'],
+    require => Package['nappl'],
     ensure  => directory,
     owner   => "git",
     group   => "git",
@@ -26,11 +26,11 @@ class nappl-server {
   }
 
   exec { 'vagrant-user-in-git-goup':
-    require => Package['drutils'],
+    require => Package['nappl'],
     command => '/etc/puppet/files/assets/util/add_user_to_group vagrant git' 
   }
   exec { 'vagrant-user-in-nappl-goup':
-    require => Package['drutils'],
+    require => Package['nappl'],
     command => '/etc/puppet/files/assets/util/add_user_to_group vagrant nappl' 
   }
   file { '/etc/hosts':
