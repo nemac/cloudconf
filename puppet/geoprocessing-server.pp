@@ -2,6 +2,7 @@ import '/vagrant/settings.pp'
 
 class { "basic-server" : }
 class { "apache-server" : }
+class { "php-server" : }
 
 package { 'netcdf':
   ensure => installed
