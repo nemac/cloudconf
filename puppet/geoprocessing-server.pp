@@ -16,11 +16,11 @@ package { 'netcdf4-python':
   ensure => installed
 }
 
-package { 'proj':
+package { 'nemac-proj':
   ensure => installed
 }
 
-package { 'proj-devel':
+package { 'nemac-proj-devel':
   ensure => installed
 }
 

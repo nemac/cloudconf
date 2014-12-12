@@ -67,4 +67,8 @@ class basic-server {
     ensure => installed
   }
 
+  package { 'mlocate':
+    ensure => installed
+  }
+
 }
