@@ -1,6 +1,7 @@
 import '/vagrant/settings.pp'
 
 class { "basic-server" : }
+class { "nfs-server" : }
 class { "apache-server" : }
 class { "php-server" : }
 
@@ -80,6 +81,15 @@ package { 'postgresql-libs':
   ensure => installed
 }
 
+
 package { 'libxml2':
+  ensure => installed
+}
+
+package { 'python-psycopg2':
+  ensure => installed
+}
+
+package { 'python-psycopg2-doc':
   ensure => installed
 }
