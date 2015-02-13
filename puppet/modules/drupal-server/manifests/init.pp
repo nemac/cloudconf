@@ -5,4 +5,9 @@ class drupal-server {
       unless => '/usr/bin/test -f /usr/bin/drush'
   }
 
+  # needed for www.mathclimate.org's google sync script:
+  package { 'MySQL-python':
+    ensure => installed
+  }
+
 }
