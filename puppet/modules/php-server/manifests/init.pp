@@ -28,4 +28,7 @@ class php-server {
     ensure => installed
   }
 
+  package { 'php-pgsql':
+    ensure => installed
+  }
 }
