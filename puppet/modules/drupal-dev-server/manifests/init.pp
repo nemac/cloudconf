@@ -20,4 +20,9 @@ class drupal-dev-server {
     ensure => installed
   }
 
+  # needed for ol-fcav and other projects involving npm, gulp, etc
+  package { 'npm' :
+    ensure => installed
+  }
+
 }
