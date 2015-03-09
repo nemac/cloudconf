@@ -23,7 +23,7 @@ class nfs-server {
   service { 'nfs':
     ensure => running,
 #   enable => true,
-    subscribe => [Exec['lockd_tcpport'],Exec['lockd_udpport'],Exec['mountd_port']]
+    subscribe => [Exec['lockd_tcpport'],Exec['lockd_udpport'],Exec['mountd_port'],Service['rpcbind']]
   }
 
 }
