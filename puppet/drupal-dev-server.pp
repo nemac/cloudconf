@@ -8,3 +8,16 @@ class { "drupal-server" : }
 class { "python-json-image" : }
 
 class { "drupal-dev-server" : }
+
+
+package { 'nemac-gdal':
+  ensure => installed
+}
+
+package { 'nemac-gdal-devel':
+  ensure => installed
+}
+
+package { 'nemac-gdal-python':
+  ensure => installed
+}
