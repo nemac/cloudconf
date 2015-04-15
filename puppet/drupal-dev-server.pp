@@ -10,6 +10,10 @@ class { "python-json-image" : }
 class { "drupal-dev-server" : }
 
 
+package { 'nemac-proj':
+  ensure => installed
+}
+
 package { 'nemac-gdal':
   ensure => installed
 }
