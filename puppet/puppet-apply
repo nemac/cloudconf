@@ -1,0 +1,3 @@
+#! /bin/bash
+
+puppet apply --verbose --debug --modulepath=/etc/puppet/files/modules:/etc/puppet/modules --fileserverconfig=/etc/puppet/files/fileserver.conf $*
