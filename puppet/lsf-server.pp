@@ -4,6 +4,11 @@ class { "basic-server" : }
 class { "apache-server" : }
 class { "php-server" : }
 
+class { "mariadb-server" : }
+class { "drupal-server" : }
+class { "python-json-image" : }
+class { "drupal-dev-server" : }
+
 package { 'netcdf':
   ensure => installed
 }
