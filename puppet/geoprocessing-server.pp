@@ -93,3 +93,7 @@ package { 'python-psycopg2':
 package { 'python-psycopg2-doc':
   ensure => installed
 }
+
+package { 'python-pandas':
+  ensure => installed
+}
