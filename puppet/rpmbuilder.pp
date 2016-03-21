@@ -98,19 +98,47 @@ package { 'libxml2-devel':
   ensure => installed
 }
 
-package { 'proj':
-  ensure => installed
-}
-
-package { 'proj-devel':
-  ensure => installed
-}
-
 package { 'nemac-gdal':
   ensure => installed
 }
 
 package { 'nemac-gdal-devel':
+  ensure => installed
+}
+
+package { 'nemac-gdal-python':
+  ensure => installed
+}
+
+package { 'nemac-proj':
+  ensure => installed
+}
+
+package { 'nemac-proj-devel':
+  ensure => installed
+}
+
+package { 'netcdf4-python':
+  ensure => installed
+}
+
+package { 'python-pandas':
+  ensure => installed
+}
+
+package { 'python-psycopg2':
+  ensure => installed
+}
+
+package { 'python-psycopg2-doc':
+  ensure => installed
+}
+
+package { 'nodejs':
+  ensure => installed
+}
+
+package { 'npm':
   ensure => installed
 }
 
