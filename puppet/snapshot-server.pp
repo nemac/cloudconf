@@ -9,3 +9,7 @@ package { 'nodejs':
 package { 'npm':
   ensure => installed
 }
+
+package { 'awscli':
+  ensure => installed
+}
